@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 type Review = {
   reviewerName: string;
   rating: number;
@@ -5,6 +7,7 @@ type Review = {
   reviewerEmail: string;
 };
 export interface ProductType {
+  brand: ReactNode;
   availabilityStatus: string;
   banner: string;
   category: string;
@@ -39,9 +42,10 @@ export interface ProductType {
   quantity?: number;
 }
 export interface StateType {
-  shopy: {
+  shofy: {
     cart: ProductType[];
     favorite: ProductType[];
-    // userInfo: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    userInfo: any;
   };
 }

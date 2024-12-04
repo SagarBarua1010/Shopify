@@ -12,7 +12,12 @@ const ProductCard = ({ product }: { product: ProductType }) => {
       className="border border-gray-400 hover:shadow-lg hover:shadow-black/30 duration-200 rounded-md
     group overflow-hidden relative"
     >
-      <Link href={"/products"}>
+      <Link
+        href={{
+          pathname: `/products/${product?.id}`,
+          query: { id: product?.id },
+        }}
+      >
         <Image
           src={product?.images[0]}
           alt="product-image"
@@ -25,7 +30,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
           {product?.discountPercentage}%
         </p>
       </Link>
-      <Sidebar></Sidebar>
+      <Sidebar product={product}></Sidebar>
       <div className="border-t border-t-borderColor py-2 px-4 flex flex-col justify-between h-40">
         <div>
           <p className="text-sm font-medium text-lightText capitalize">
@@ -36,7 +41,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
           </h2>
           <ProductPrice product={product}></ProductPrice>
         </div>
-        <AddToCartButton></AddToCartButton>
+        <AddToCartButton product={product}></AddToCartButton>
       </div>
     </div>
   );

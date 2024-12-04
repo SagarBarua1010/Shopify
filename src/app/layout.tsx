@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import Footer from "@/components/Footer";
+import Layout from "@/components/Layout";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,7 +18,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Shopify - Multipurpose E-commerce website",
+  title: "Shopifyyt - Multipurpose E-commerce website",
   description: "Shopify - Multipurpose E-commerce website",
 };
 
@@ -30,9 +32,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header></Header>
-        {children}
-        <Footer></Footer>
+        <Layout>
+          <Header></Header>
+          {children}
+          <Footer></Footer>
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              duration: 3000,
+              style: { background: "#000000", color: "#FFB200" },
+            }}
+          ></Toaster>
+        </Layout>
       </body>
     </html>
   );
