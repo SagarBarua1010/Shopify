@@ -25,7 +25,7 @@ const SignInButton = () => {
           </div>
           <div>
             <p className="text-xs">{session?.user?.name}</p>
-            <p className="font-bold">Logout</p>
+            <p className="font-bold">Sing Out</p>
           </div>
         </div>
       ) : (
@@ -37,8 +37,8 @@ const SignInButton = () => {
             <LiaUser></LiaUser>
           </div>
           <div>
-            <p className="text-xs">Hello, Guests</p>
-            <p className="font-bold">Login / Register</p>
+            <p className="text-xs">Hello, Guys</p>
+            <p className="font-bold">Singnin / Register</p>
           </div>
         </div>
       )}
