@@ -1,35 +1,40 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ProductType } from "../../../../type";
 import Stripe from "stripe";
+
 export const POST = async (request: NextRequest) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   try {
     const reqBody = await request.json();
     const { items, email } = await reqBody;
+
     const extractingItems = await items?.map((item: ProductType) => ({
       quantity: item?.quantity,
       price_data: {
         currency: "usd",
-        unit_amount: Math.round(item?.price * 100),
+        unit_amount: Math.round(
+          item?.price * 100 * (1 - item?.discountPercentage / 100)
+        ),
         product_data: {
           name: item?.title,
           description: item?.description,
-          items: item?.images,
+          images: item?.images,
         },
       },
     }));
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: extractingItems,
-      success_url: `${process.env.NEXTAUTH_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+      mode: "payment",
+      success_url: `${process.env.NEXTAUTH_URL}/success?session_id={CHECKOUT_SESSION-ID}`,
       cancel_url: `${process.env.NEXTAUTH_URL}/cancel`,
       metadata: {
         email,
       },
     });
-
+    console.log("session", session);
     return NextResponse.json({
-      message: "Keep alive",
+      message: "keep alice",
       success: true,
       id: session?.id,
     });

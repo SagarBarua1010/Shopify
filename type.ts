@@ -45,6 +45,7 @@ export interface StateType {
   shofy: {
     cart: ProductType[];
     favorite: ProductType[];
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     userInfo: any;
   };

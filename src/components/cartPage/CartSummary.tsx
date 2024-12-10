@@ -3,8 +3,9 @@ import Title from "../Title";
 import PriceFormat from "../PriceFormat";
 import { ProductType } from "../../../type";
 import Button from "../Button";
-import toast from "react-hot-toast";
+
 import { useSession } from "next-auth/react";
+import { loadStripe } from "@stripe/stripe-js";
 
 interface Props {
   cart: ProductType[];
@@ -22,17 +23,23 @@ const CartSummary = ({ cart }: Props) => {
     cart?.map((item) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       amt += item?.price * item?.quantity!;
+
       // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       discount += ((item?.price * item.quantity!) / 100) * item?.quantity!;
     });
     setTotalAmt(amt);
     setDiscountAmt(discount);
   }, [cart]);
+
+  const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+  );
   const handleCheckout = async () => {
+    const stripe = await stripePromise;
     const response = await fetch("/api/checkout", {
       method: "POST",
       headers: {
-        "Content-type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         items: cart,
@@ -40,6 +47,13 @@ const CartSummary = ({ cart }: Props) => {
       }),
     });
     const checkoutSession = await response?.json();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result: any = await stripe?.redirectToCheckout({
+      sessionId: checkoutSession?.id,
+    });
+    if (result?.error) {
+      window.alert(result?.error?.message);
+    }
   };
   return (
     <div className="bg-gray-100 rounded-lg px-4 py-6 sm:p-10 lg:col-span-5 mt-10 lg:mt-0">
