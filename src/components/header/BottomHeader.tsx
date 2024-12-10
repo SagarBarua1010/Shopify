@@ -30,7 +30,7 @@ const BottomHeader = async () => {
           )}
         </div>
         <p className="hidden md:inline-flex text-xs text-gray-400 font-medium">
-          Hotline:<span className="text-black">+88 01516178083</span>
+          Hotline:<span className="text-black">+880 01516178083</span>
         </p>
         <MobileNavigation></MobileNavigation>
       </Container>
