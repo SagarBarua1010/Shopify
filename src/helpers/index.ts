@@ -1,10 +1,20 @@
-export const getData=async(endpoint:string)=>{
-    const response = await fetch (endpoint,{
-        method:'GET',
-        headers:{
-            'Content-type':'application/json',
-        },
+export const getData = async (endpoint: string) => {
+  try {
+    const response = await fetch(endpoint, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-    const data = await response?.json();
-    return data; 
-}
+
+    if (!response.ok) {
+      throw new Error("error");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+    throw error;
+  }
+};
