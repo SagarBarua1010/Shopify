@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import shofyReducer from "./shofySlice";
 import { persistStore, persistReducer, WebStorage } from "redux-persist";
 import createWebStorage from "redux-persist/es/storage/createWebStorage";
-import { version } from "os";
 
 export function createPersistStore(): WebStorage {
   const isServer = typeof window === "undefined";
@@ -28,7 +27,7 @@ const storage =
 
 const persistConfig = {
   key: "root",
-  version: 0.1,
+  version: 1,
   storage,
 };
 
@@ -39,4 +38,5 @@ export const store = configureStore({
     shofy: persistedReducer,
   },
 });
+// eslint-disable-next-line prefer-const
 export let persistor = persistStore(store);
