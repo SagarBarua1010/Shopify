@@ -38,7 +38,7 @@ const SignInButton = () => {
           </div>
           <div>
             <p className="text-xs">Hello, Guys</p>
-            <p className="font-bold">Singnin / Register</p>
+            <p className="font-bold">Sing Up / Register</p>
           </div>
         </div>
       )}
